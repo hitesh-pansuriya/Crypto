@@ -50,7 +50,7 @@ extension CoinRowView{
                 .foregroundColor(Color.theme.secondaryText)
                 .frame(minWidth: 30)
 
-            Circle()
+                CoinImageView(coin: coin)
                 .frame(width: 30, height: 30)
 
             Text(coin.symbol.uppercased())
@@ -81,6 +81,6 @@ extension CoinRowView{
                     (coin.priceChangePercentage24H ?? 0) >= 0 ? Color.theme.green : Color.theme.red
                 )
         }
-        .frame(width: UIScreen.main.bounds.width / 3.5, alignment: .trailing)
+        
     }
 }
