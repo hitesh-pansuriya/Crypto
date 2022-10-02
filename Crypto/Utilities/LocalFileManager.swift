@@ -12,15 +12,15 @@ class LocalFileManager {
     static let instance = LocalFileManager()
     private init(){}
 
-    func saveImage(image: UIImage, imageName: String, foldernName: String){
+    func saveImage(image: UIImage, imageName: String, folderName: String){
 
         //create folder
-        createFolderIfNeeded(folderName: foldernName)
+        createFolderIfNeeded(folderName: folderName)
 
         //get path for image
         guard
             let data = image.pngData(),
-            let url = getURLForImage(imageName: imageName, foldernName: foldernName)
+            let url = getURLForImage(imageName: imageName, folderName: folderName)
             else {return}
 
         //save Image to path
@@ -33,7 +33,7 @@ class LocalFileManager {
 
     func getImage(ImageName: String, folderName: String) -> UIImage?{
         guard
-            let url = getURLForImage(imageName: ImageName, foldernName: folderName),
+            let url = getURLForImage(imageName: ImageName, folderName: folderName),
             FileManager.default.fileExists(atPath: url.path) else {
                 return nil
         }
@@ -42,7 +42,7 @@ class LocalFileManager {
     }
 
     private func createFolderIfNeeded(folderName: String){
-        guard let url = getURLForFolder(foldernName: folderName) else {return}
+        guard let url = getURLForFolder(folderName: folderName) else {return}
         if !FileManager.default.fileExists(atPath: url.path) {
             do {
                 try FileManager.default.createDirectory(at: url, withIntermediateDirectories: true, attributes: nil)
@@ -52,14 +52,14 @@ class LocalFileManager {
         }
     }
 
-    private func getURLForFolder(foldernName: String) -> URL? {
+    private func getURLForFolder(folderName: String) -> URL? {
         guard let url = FileManager.default.urls(for: .cachesDirectory, in: .userDomainMask).first else { return nil }
 
-        return url.appendingPathComponent(foldernName)
+        return url.appendingPathComponent(folderName)
     }
 
-    private func getURLForImage(imageName: String, foldernName: String) -> URL?{
-        guard let folderURl = getURLForFolder(foldernName: foldernName) else {return nil}
+    private func getURLForImage(imageName: String, folderName: String) -> URL?{
+        guard let folderURl = getURLForFolder(folderName: folderName) else {return nil}
 
         return folderURl.appendingPathComponent(imageName + ".png")
 
